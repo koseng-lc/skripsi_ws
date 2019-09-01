@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<launch>
+
+    <node pkg="motion_assistance" name="motion_assistance_node" type="motion_assistance_node" output="screen" >
+
+    </node>
+
+    <node pkg="gait_tuner" name="gait_tuner_node" type="gait_tuner_node" output="screen" >
+
+    </node>
+
+</launch>

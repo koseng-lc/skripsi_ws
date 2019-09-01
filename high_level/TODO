@@ -1,0 +1,1 @@
+- RVO - Return Value Optimization -> to prevent copy constructor, by prevent return value inside if scope
