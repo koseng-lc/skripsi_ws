@@ -1,4 +1,6 @@
 # skripsi_ws
+I still looking for the time, to create the document for this project. But the basic idea summarized in the description below.
+
 The main part of this architecture is divided by two part, high-level architecture and low-level architecture.
 
 ### High-Level
