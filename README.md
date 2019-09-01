@@ -8,6 +8,10 @@ This part is responsible to handle all the motion of the humanoid. The resulting
 All kinds of interaction between software and hardware are hadled by this part,
 such as receive data from sensor and transmit command to servo .
 
+### Reference
+> Marcell Missura and Sven Behnke. *Self-stable Omnidirectional Walking with
+Compliant Joints*. In 13th IEEE-RAS International Conference on Humanoid Robots (Humanoids), Atalanta, GA, 2013.
+
 ### Todos
   - Finishing Low-Level architecture
   - Solve the OpenGL simulation bug
