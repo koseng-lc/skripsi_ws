@@ -15,6 +15,9 @@ Gait Implementation
 > Marcell Missura and Sven Behnke. *Self-stable Omnidirectional Walking with
 Compliant Joints*. In 13th IEEE-RAS International Conference on Humanoid Robots (Humanoids), Atalanta, GA, 2013.
 
+## Demo
+[![Demo](https://img.youtube.com/vi/H9wYJj_KRyo/0.jpg)](https://www.youtube.com/watch?v=H9wYJj_KRyo)
+
 ### Todos
   - Finishing Low-Level architecture
   - Solve the OpenGL simulation bug
