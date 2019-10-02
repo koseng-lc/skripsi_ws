@@ -75,27 +75,27 @@ void Walking::publishData(){
     g_eng_data_.motion_phase = gait_engine_.getMotionPhase();
 
     auto r_patt{gait_engine_.getIntuitiveLegValue(GaitEngine::RIGHT)};
-    high_level_msgs::IntuitiveLeg::_r_pattern_type copy_r_patt{r_patt.at(0),r_patt.at(1),r_patt.at(2),
-                                                               r_patt.at(3),r_patt.at(4),r_patt.at(5)};
+    high_level_msgs::IntuitiveLeg::_r_pattern_type copy_r_patt{r_patt(0),r_patt(1),r_patt(2),
+                                                               r_patt(3),r_patt(4),r_patt(5)};
     g_eng_data_.intuitive_leg.r_pattern = copy_r_patt;
 
     auto l_patt{gait_engine_.getIntuitiveLegValue(GaitEngine::LEFT)};
-    high_level_msgs::IntuitiveLeg::_l_pattern_type copy_l_patt{l_patt.at(0),l_patt.at(1),l_patt.at(2),
-                                                               l_patt.at(3),l_patt.at(4),l_patt.at(5)};
+    high_level_msgs::IntuitiveLeg::_l_pattern_type copy_l_patt{l_patt(0),l_patt(1),l_patt(2),
+                                                               l_patt(3),l_patt(4),l_patt(5)};
     g_eng_data_.intuitive_leg.l_pattern = copy_l_patt;
 
     auto r_sig{gait_engine_.getMotionPrimitiveSignal(GaitEngine::RIGHT)};
-    high_level_msgs::MotionPrimitive::_r_signal_type copy_r_sig{r_sig.at(0),r_sig.at(1),r_sig.at(2),
-                                                                r_sig.at(3),r_sig.at(4),r_sig.at(5),
-                                                                r_sig.at(6),r_sig.at(7),r_sig.at(8),
-                                                                r_sig.at(9),r_sig.at(10),r_sig.at(11)};
+    high_level_msgs::MotionPrimitive::_r_signal_type copy_r_sig{r_sig(0),r_sig(1),r_sig(2),
+                                                                r_sig(3),r_sig(4),r_sig(5),
+                                                                r_sig(6),r_sig(7),r_sig(8),
+                                                                r_sig(9),r_sig(10),r_sig(11)};
     g_eng_data_.motion_primitive.r_signal = copy_r_sig;
 
     auto l_sig{gait_engine_.getMotionPrimitiveSignal(GaitEngine::LEFT)};
-    high_level_msgs::MotionPrimitive::_l_signal_type copy_l_sig{l_sig.at(0),l_sig.at(1),l_sig.at(2),
-                                                                l_sig.at(3),l_sig.at(4),l_sig.at(5),
-                                                                l_sig.at(6),l_sig.at(7),l_sig.at(8),
-                                                                l_sig.at(9),l_sig.at(10),l_sig.at(11)};
+    high_level_msgs::MotionPrimitive::_l_signal_type copy_l_sig{l_sig(0),l_sig(1),l_sig(2),
+                                                                l_sig(3),l_sig(4),l_sig(5),
+                                                                l_sig(6),l_sig(7),l_sig(8),
+                                                                l_sig(9),l_sig(10),l_sig(11)};
     g_eng_data_.motion_primitive.l_signal = copy_l_sig;
 
     g_eng_data_pub_.publish(g_eng_data_);

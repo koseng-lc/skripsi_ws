@@ -1,5 +1,9 @@
 /**
  * @author koseng : lintangerlangga@gmail.com
+ * @brief In one project of specific robot the kinematics are rarely changed
+ *        so the singleton is choosen, keep in mind the singleton will allocated
+ *        more than one if called in another node, because node is representation
+ *        of a program/executable which imply to different address in each node
  */
 
 #pragma once

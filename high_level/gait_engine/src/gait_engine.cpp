@@ -87,13 +87,13 @@ GaitEngine::ControlInterface::ControlInterface()
 }
 
 void GaitEngine::ControlInterface::process(double &_motion_phase){
-    vel_.at(Vx) += std::max(-config_.C22, std::min(input_vel_.at(Vx) - vel_.at(Vx), config_.C22));
-    vel_.at(Vy) += std::max(-config_.C23, std::min(input_vel_.at(Vy) - vel_.at(Vy), config_.C23));
-    vel_.at(Vphi) += std::max(-config_.C24, std::min(input_vel_.at(Vphi) - vel_.at(Vphi), config_.C24));
+    vel_(Vx) += std::max(-config_.C22, std::min(input_vel_(Vx) - vel_(Vx), config_.C22));
+    vel_(Vy) += std::max(-config_.C23, std::min(input_vel_(Vy) - vel_(Vy), config_.C23));
+    vel_(Vphi) += std::max(-config_.C24, std::min(input_vel_(Vphi) - vel_(Vphi), config_.C24));
 
-    abs_vel_.at(Vx) = std::fabs(vel_.at(Vx));
-    abs_vel_.at(Vy) = std::fabs(vel_.at(Vy));
-    abs_vel_.at(Vphi) = std::fabs(vel_.at(Vphi));
+    abs_vel_(Vx) = std::fabs(vel_(Vx));
+    abs_vel_(Vy) = std::fabs(vel_(Vy));
+    abs_vel_(Vphi) = std::fabs(vel_(Vphi));
 }
 
 // Motion Pattern
@@ -127,25 +127,25 @@ inline double GaitEngine::MotionPattern::haltFootPitch(){
 }
 
 inline double GaitEngine::MotionPattern::liftLegExt(){
-    double max_vel = std::max(abs_vel_.at(Vx), abs_vel_.at(Vy));
+    double max_vel = std::max(abs_vel_(Vx), abs_vel_(Vy));
     return (this->motion_phase_ <= 0) ? sin(this->motion_phase_)*(config_.C6 + config_.C7*max_vel) :
                                         sin(this->motion_phase_)*(config_.C8 + config_.C9*max_vel);
 }
 
 inline double GaitEngine::MotionPattern::legSwingPitch(){
-    return vel_.at(Vx) >= 0 ? gamma_const_ * vel_.at(Vx) * config_.C10 :
-                              gamma_const_ * vel_.at(Vx) * config_.C11;
+    return vel_(Vx) >= 0 ? gamma_const_ * vel_(Vx) * config_.C10 :
+                              gamma_const_ * vel_(Vx) * config_.C11;
 }
 
 inline double GaitEngine::MotionPattern::legSwingRoll(Leg _leg){
-    return -gamma_const_ * vel_.at(Vy) * config_.C12
-           - _leg * std::max(abs_vel_.at(Vy) * config_.C13,
-                             abs_vel_.at(Vphi) * config_.C14);
+    return -gamma_const_ * vel_(Vy) * config_.C12
+           - _leg * std::max(abs_vel_(Vy) * config_.C13,
+                             abs_vel_(Vphi) * config_.C14);
 }
 
 inline double GaitEngine::MotionPattern::legSwingYaw(Leg _leg){
-    return gamma_const_ * vel_.at(Vphi) * config_.C15
-           -_leg * abs_vel_.at(Vphi) * config_.C16;
+    return gamma_const_ * vel_(Vphi) * config_.C15
+           -_leg * abs_vel_(Vphi) * config_.C16;
 }
 
 inline double GaitEngine::MotionPattern::hipSwing(){
@@ -155,11 +155,11 @@ inline double GaitEngine::MotionPattern::hipSwing(){
 }
 
 inline double GaitEngine::MotionPattern::leanPitch(){
-    return (vel_.at(Vx) >= .0) ? vel_.at(Vx) * config_.C18 : vel_.at(Vx) * config_.C19;
+    return (vel_(Vx) >= .0) ? vel_(Vx) * config_.C18 : vel_(Vx) * config_.C19;
 }
 
 inline double GaitEngine::MotionPattern::leanRoll(){
-    return vel_.at(Vphi) * abs_vel_.at(Vx) * config_.C20;
+    return vel_(Vphi) * abs_vel_(Vx) * config_.C20;
 }
 
 inline void GaitEngine::MotionPattern::updateGammaConst(){
@@ -287,11 +287,11 @@ void GaitEngine::LegInterface::process(const colvec& r_signals, const colvec& l_
 }
 
 inline double& GaitEngine::LegInterface::setIntuitiveLegValue(IntuitiveLegParam _param, Leg _leg){
-    return (_leg == RIGHT) ? r_pattern_.at(_param) : l_pattern_.at(_param);
+    return (_leg == RIGHT) ? r_pattern_(_param) : l_pattern_(_param);
 }
 
 inline double GaitEngine::LegInterface::getIntuitiveLegValue(IntuitiveLegParam _param, Leg _leg) const{
-    return (_leg == RIGHT) ? r_pattern_.at(_param) : l_pattern_.at(_param);
+    return (_leg == RIGHT) ? r_pattern_(_param) : l_pattern_(_param);
 }
 
 void GaitEngine::LegInterface::intuitiveLegToJointAngle(){
@@ -308,11 +308,11 @@ void GaitEngine::LegInterface::intuitiveLegToJointAngle(){
     colvec tfed_angle = tf_mat * untfed_angle;    
 
     GaitEngine::setTargetAngle(JointData::R_HIP_YAW) = yaw_angle;
-    GaitEngine::setTargetAngle(JointData::R_HIP_ROLL) = tfed_angle.at(1);
-    GaitEngine::setTargetAngle(JointData::R_HIP_PITCH) = tfed_angle.at(0) - lambda_const;
+    GaitEngine::setTargetAngle(JointData::R_HIP_ROLL) = tfed_angle(1);
+    GaitEngine::setTargetAngle(JointData::R_HIP_PITCH) = tfed_angle(0) - lambda_const;
     GaitEngine::setTargetAngle(JointData::R_KNEE) = 2.0 * lambda_const;
-    GaitEngine::setTargetAngle(JointData::R_ANK_PITCH) = getIntuitiveLegValue(PITCH_FOOT, RIGHT) - tfed_angle.at(0) - lambda_const;
-    GaitEngine::setTargetAngle(JointData::R_ANK_ROLL) = getIntuitiveLegValue(ROLL_FOOT, RIGHT) - tfed_angle.at(1);
+    GaitEngine::setTargetAngle(JointData::R_ANK_PITCH) = getIntuitiveLegValue(PITCH_FOOT, RIGHT) - tfed_angle(0) - lambda_const;
+    GaitEngine::setTargetAngle(JointData::R_ANK_ROLL) = getIntuitiveLegValue(ROLL_FOOT, RIGHT) - tfed_angle(1);
 
     //------------
 
@@ -331,10 +331,10 @@ void GaitEngine::LegInterface::intuitiveLegToJointAngle(){
     tfed_angle = tf_mat * untfed_angle;
 
     GaitEngine::setTargetAngle(JointData::L_HIP_YAW) = yaw_angle;
-    GaitEngine::setTargetAngle(JointData::L_HIP_ROLL) = tfed_angle.at(1);
-    GaitEngine::setTargetAngle(JointData::L_HIP_PITCH) = tfed_angle.at(0) - lambda_const;
+    GaitEngine::setTargetAngle(JointData::L_HIP_ROLL) = tfed_angle(1);
+    GaitEngine::setTargetAngle(JointData::L_HIP_PITCH) = tfed_angle(0) - lambda_const;
     GaitEngine::setTargetAngle(JointData::L_KNEE) = 2.0 * lambda_const;
-    GaitEngine::setTargetAngle(JointData::L_ANK_PITCH) = getIntuitiveLegValue(PITCH_FOOT, LEFT) - tfed_angle.at(0) - lambda_const;
-    GaitEngine::setTargetAngle(JointData::L_ANK_ROLL) = getIntuitiveLegValue(ROLL_FOOT, LEFT) - tfed_angle.at(1);
+    GaitEngine::setTargetAngle(JointData::L_ANK_PITCH) = getIntuitiveLegValue(PITCH_FOOT, LEFT) - tfed_angle(0) - lambda_const;
+    GaitEngine::setTargetAngle(JointData::L_ANK_ROLL) = getIntuitiveLegValue(ROLL_FOOT, LEFT) - tfed_angle(1);
 
 }

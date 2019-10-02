@@ -1,5 +1,6 @@
 /**
  * @author koseng : lintangerlangga@gmail.com
+ * @brief Math stuff utility
  */
 
 #pragma once
@@ -21,16 +22,16 @@ static constexpr auto RAD2DEG = 1.0 / DEG2RAD;
 //prevent multiple definition and take that reference only
 static inline colvec wedge(const mat& _in){
     if(approx_equal(_in.t(), -_in, "absdiff", .0)){
-        return colvec{_in.at(2,1), _in.at(0,2), _in.at(1,0)};
+        return colvec{_in(2,1), _in(0,2), _in(1,0)};
     }
     return colvec{.0, .0, .0};
 }
 
 static inline mat hat(const colvec& _in){
     mat res;
-    res << .0 << -_in.at(2) << _in.at(1) << endr
-        << _in.at(2) << .0 << -_in.at(0) << endr
-        << -_in.at(1) << _in.at(0) << .0 << endr;
+    res << .0 << -_in(2) << _in(1) << endr
+        << _in(2) << .0 << -_in(0) << endr
+        << -_in(1) << _in(0) << .0 << endr;
     return res;
 }
 

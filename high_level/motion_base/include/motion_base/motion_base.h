@@ -6,7 +6,7 @@
 #pragma once
 
 class MotionBase{
-public:
+public:    
     virtual void execute() = 0;
     virtual void init() = 0;
 

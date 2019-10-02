@@ -1,5 +1,6 @@
 /**
  * @author koseng : lintangerlangga@gmail.com
+ * @brief Implementation of Nimbro Gait
  */
 
 #pragma once
@@ -85,7 +86,7 @@ public:
 
     inline double getTargetAngle(JointData::LinkID _joint_id) const{
         assert(_joint_id >= JointData::R_HIP_YAW && _joint_id <= JointData::L_ANK_ROLL);
-        return target_angle_.at(_joint_id - JointData::R_HIP_YAW);
+        return target_angle_(_joint_id - JointData::R_HIP_YAW);
     }
 
     inline double getMotionPhase() const{return common_phase_;}
@@ -111,7 +112,7 @@ private:
 
     static inline double& setTargetAngle(JointData::LinkID _joint_id){
         assert(_joint_id >= JointData::R_HIP_YAW && _joint_id <= JointData::L_ANK_ROLL);
-        return target_angle_.at(_joint_id - JointData::R_HIP_YAW); // offset to first leg joint id
+        return target_angle_(_joint_id - JointData::R_HIP_YAW); // offset to first leg joint id
     }
 
 
@@ -125,13 +126,13 @@ private:
         }
 
         inline double getInputVelocity(VelocityAxis _v_axis) const{
-            return input_vel_.at(_v_axis);
+            return input_vel_(_v_axis);
         }
 
         inline void maintainMotionPhase(double &_motion_phase){
             _motion_phase += config_.C25 +
-                             abs_vel_.at(Vx)*config_.C26 +
-                             abs_vel_.at(Vy)*config_.C27;
+                             abs_vel_(Vx)*config_.C26 +
+                             abs_vel_(Vy)*config_.C27;
 
             if(_motion_phase > MathUtils::PI)_motion_phase -= MathUtils::TWO_PI;
         }
@@ -184,7 +185,7 @@ private:
         }
 
         inline double getActivationSignals(MotionPrimtive _type, Leg _leg) const{
-            return (_leg == RIGHT) ? r_signals_.at(_type) : l_signals_.at(_type);
+            return (_leg == RIGHT) ? r_signals_(_type) : l_signals_(_type);
         }
 
     }motion_pattern_;
